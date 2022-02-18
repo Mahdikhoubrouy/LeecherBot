@@ -35,15 +35,16 @@ def write_to_file(data:list,path:str) -> None:
 def leecher(c:Client,m:Message):
     text = m.text
 
-
     if text.startswith('!leech'):
         list_users = []
         group_id = text.split('!leech')[1].strip()
         Check = check_group_id(c,group_id)
         if Check:
+            m.reply("Received , Please be Patient")
             for i in word:
+                print("leech : " + str(group_id)+ ": " + str(len(list_users)))
                 try:
-                    user = c.iter_chat_members(group_id,query=i,filter="all")
+                    user = c.iter_chat_members(group_id,query=i,filter="all",limit=10000)
                     for u in user:
                         info_user = (u.user.id,u.user.username,u.user.first_name)
                         list_users.append(info_user)
