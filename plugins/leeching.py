@@ -3,10 +3,9 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 import time
 from config import ADMIN
-
+import string
 #===================[Varible]=================#
-admin = ADMIN
-word = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m']
+word = string.ascii_lowercase
 
 
 #===================[Function]=================#
@@ -31,7 +30,7 @@ def write_to_file(data:list,path:str) -> None:
 
 
 # Handler
-@Client.on_message(filters.private & filters.text & filters.user(admin))
+@Client.on_message(filters.private & filters.text & filters.user(ADMIN))
 def leecher(c:Client,m:Message):
     text = m.text
 
