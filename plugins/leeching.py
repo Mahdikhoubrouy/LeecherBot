@@ -24,7 +24,6 @@ def check_group_id(client:Client,id:int) ->bool:
 def write_to_file(data:list,path:str) -> None:
     file = open(path,"a+",encoding="utf-8")
     for user in data:
-        print(user)
         info = f"{user[0]},{user[1]},{user[2]}\n"
         file.write(info)
     file.close()
