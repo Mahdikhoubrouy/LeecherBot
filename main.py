@@ -10,6 +10,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 
 if __name__ == "__main__":
     print("Starting Bot ... !")
+    print("Please report any problems, thanks : Telegram : @Sir_miti")
     if not os.path.exists('data'):
         os.mkdir("data")
 
