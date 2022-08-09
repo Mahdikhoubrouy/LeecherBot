@@ -1,6 +1,9 @@
+import imp
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
+from pyrogram.enums.chat_type import ChatType
+from pyrogram.enums.chat_members_filter import ChatMembersFilter
 import time
 from config import ADMIN
 import string
@@ -9,11 +12,10 @@ word = string.ascii_lowercase
 
 
 #===================[Function]=================#
-def check_group_id(client:Client,id:int) ->bool:
-    print(id)
+async def check_group_id(client:Client,id:int) ->bool:
     try:
-        status = client.get_chat(chat_id=id)
-        if status.type == "group" or status.type == "supergroup":
+        status = await client.get_chat(id)
+        if status.type == ChatType.GROUP or status.type == ChatType.SUPERGROUP:
             return True
 
     except Exception as ex:
@@ -31,38 +33,36 @@ def write_to_file(data:list,path:str) -> None:
 
 # Handler
 @Client.on_message(filters.private & filters.text & filters.user(ADMIN))
-def leecher(c:Client,m:Message):
+async def leecher(c:Client,m:Message):
     text = m.text
 
     if text.startswith('!leech'):
         list_users = []
         group_id = text.split('!leech')[1].strip()
-        Check = check_group_id(c,group_id)
+        Check = await check_group_id(c,int(group_id))
         if Check:
-            m.reply("Received , Please be Patient")
+            await m.reply("Received , Please be Patient")
             for i in word:
                 print("leech : " + str(group_id)+ ": " + str(len(list_users)))
                 try:
-                    user = c.iter_chat_members(group_id,query=i,filter="all",limit=10000)
-                    for u in user:
-                        info_user = (u.user.id,u.user.username,u.user.first_name)
-                        list_users.append(info_user)
+                    async for user in c.get_chat_members(group_id,query="",filter=ChatMembersFilter.SEARCH,limit=0):
+                            info_user = (user.user.id,user.user.username,user.user.first_name)
+                            list_users.append(info_user)
 
                 except FloodWait as ex:
                     time.sleep(ex.x)
-                    user = c.iter_chat_members(group_id,query=i,filter="all")
-                    for u in user:
-                        info_user = (u.user.id,u.user.username,u.user.first_name)
-                        list_users.append(info_user)
+                    async for user in c.get_chat_members(group_id,query=i,filter=ChatMembersFilter.SEARCH,limit=0):
+                            info_user = (user.user.id,user.user.username,user.user.first_name)
+                            list_users.append(info_user)
 
             list_users = list(dict.fromkeys(list_users)) 
             path = "data\\"+str(group_id)+".txt"
             write_to_file(list_users,path)
 
-            c.send_document(m.from_user.id,path,caption=f"Leeched Group : {group_id}")
+            await c.send_document(m.from_user.id,path,caption=f"Leeched Group : {group_id}")
             list_users.clear()            
         else:
-            m.reply("**ID inCorrect ..!**")
+            await m.reply("**ID inCorrect ..!**")
 
 
 

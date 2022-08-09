@@ -14,5 +14,5 @@ if __name__ == "__main__":
         os.mkdir("data")
 
     plugins = dict(root="plugins")
-    app = Client(session_name="LeecherBot",api_id=API_id,api_hash=API_hash,plugins=plugins)
+    app = Client(name="LeecherBot",api_id=API_id,api_hash=API_hash,plugins=plugins)
     app.run()
