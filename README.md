@@ -5,7 +5,7 @@
 
 1.  Pyrogram 
 
-🔴How to use it:
+### 🔴How to use it:
 
 > 1.  Set **(API\_ID,API\_HASH,AdminId)** To file **config.py**
 > 2.  **login** with a Telegram Account
