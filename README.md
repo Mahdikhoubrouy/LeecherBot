@@ -17,4 +17,4 @@
 > 3.  **Wait for the bot to send you the list of user IDs for that chat.**
 > 4.  _**This operation may take a long time** (it depends on many factors)._
 
-> #### [Please report it if there is a problem](https://github.com/miticyber/LeecherBot/issues)
+> #### [Please report it if there is a problem](https://github.com/MahdiKhoubrouy/LeecherBot/issues)
